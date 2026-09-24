@@ -1,6 +1,6 @@
 {
-  "pasta_saida": "C:\\Users\\Usuario\\Downloads\\STUDIO\\JORNAIS",
-  "pasta_saida_interior": "C:\\Users\\Usuario\\Downloads\\STUDIO\\JORNAIS\\jornais do interior",
+  "pasta_saida": "JORNAIS",
+  "pasta_saida_interior": "JORNAIS/jornais do interior",
   "jornais": {
     "agazeta": {
       "nome": "A Gazeta - Sao Bento do Sul",

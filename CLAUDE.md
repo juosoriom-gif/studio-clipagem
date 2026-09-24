@@ -124,8 +124,44 @@ de semana) ficou sem função prática nesse novo desenho e segue desativada.
 
 Em 24/09/2026 o usuário cancelou a rotina de recorte das colunas de opinião
 (Paulo Rolemberg e Raul Sartori) que rodava dentro da `clipagem-diaria-5h`.
-Não recorte nem envie imagens de página/coluna nessa tarefa — ela agora só
-baixa o PDF de A Gazeta e valida o número de páginas.
+Não recorte nem envie imagens de página/coluna nessa tarefa.
+
+## Download de A Gazeta migrou para a nuvem (24/09/2026)
+
+A tarefa local `clipagem-diaria-5h` nunca disparava de fato às 23h30: o PC do
+usuário fica desligado à noite, então a execução só acontecia quando ele ligava
+a máquina de manhã (~5h-6h40), um catch-up, não o agendamento real. Como a
+regra de ouro (confirmar a edição mais recente) é sensível a horário — A Gazeta
+publica a edição do dia seguinte à noite — isso importava.
+
+Solução: o download em si agora roda numa **rotina em nuvem** (Claude Code
+routine, não depende do PC do usuário estar ligado), às 23h30 horário de
+Brasília. Peças:
+- Repositório Git: https://github.com/juosoriom-gif/studio-clipagem (privado).
+  Contém só `automacao/` (scripts + config.json) e `CLAUDE.md` — a pasta
+  `JORNAIS/` e outros arquivos da raiz da STUDIO ficam de fora (`.gitignore`),
+  não fazem parte do repositório.
+- Rotina: "Clipagem - A Gazeta 23h30"
+  (https://claude.ai/code/routines/trig_01Xckp4oMs3xMwTso7AREdf8), cron
+  `30 2 * * *` (UTC) = 23h30 America/Sao_Paulo. Roda
+  `TZ=America/Sao_Paulo python3 automacao/scripts/baixar_jornal.py agazeta`
+  (fixar TZ é necessário — o script decide a data da edição pela hora local,
+  e o container da nuvem roda em UTC por padrão), valida o PDF com pypdf,
+  copia o resultado para `entregas/AAAA-MM-DD/` no repositório, atualiza
+  `edicao_semente` no `config.json` e dá commit+push.
+- `automacao/config.json`: `pasta_saida` e `pasta_saida_interior` viraram
+  caminhos **relativos** (`JORNAIS`, não `C:\Users\...`) para funcionar tanto
+  local quanto no container Linux da nuvem — os scripts sempre são chamados
+  com cwd na raiz da STUDIO, então isso não muda o comportamento local.
+- A tarefa local `clipagem-diaria-5h` mudou de função: não baixa mais nada,
+  só dá `git pull` no repositório e copia o que estiver em `entregas/` para
+  `JORNAIS/` (mesma convenção de nome de pasta/arquivo). Ver o SKILL.md da
+  tarefa para os passos exatos.
+
+Se o usuário disser que o PDF não apareceu em `JORNAIS/`, a nuvem pode ter
+rodado (ela não depende do PC) — antes de reinvestigar a fonte, cheque
+`git log`/`entregas/` no repositório e rode `git pull` local antes de
+suspeitar de bug na automação de download em si.
 
 Não investigue de novo o que já está escrito aqui. Em 01/08/2026 a rodada
 completa levou 45 minutos porque foi tudo redescoberto do zero; com este

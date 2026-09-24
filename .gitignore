@@ -1,0 +1,24 @@
+# Jornais baixados (grande, muda todo dia) - fica só local
+JORNAIS/
+
+# Arquivos de outros clientes/trabalhos na raiz da pasta STUDIO
+arquivos/
+*.pptx
+*.xlsx
+*.docx
+*.pdf
+~$*
+
+# Estado do Claude Code / tarefas agendadas (local, não versionar)
+.claude/
+
+# Logs
+automacao/logs/
+*.log
+
+# Python
+__pycache__/
+*.pyc
+
+# Exceção: PDFs entregues pela rotina em nuvem ficam versionados aqui
+!entregas/**/*.pdf

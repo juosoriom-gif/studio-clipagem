@@ -1,0 +1,172 @@
+{
+  "pasta_saida": "C:\\Users\\Usuario\\Downloads\\STUDIO\\JORNAIS",
+  "pasta_saida_interior": "C:\\Users\\Usuario\\Downloads\\STUDIO\\JORNAIS\\jornais do interior",
+  "jornais": {
+    "agazeta": {
+      "nome": "A Gazeta - Sao Bento do Sul",
+      "id_veiculo": 102,
+      "slug": "agazetasaobentodosul",
+      "tipo": "paginas_jpg",
+      "url_modelo": "https://www.agazetaonline.com.br/edicoes/{edicao}/pages/{pagina}.jpg",
+      "edicao_semente": 9034,
+      "ativo": true,
+      "observacao": "Aberto, sem login. Testado em 01/08/2026: edicao 8989, 24 paginas. Publica tambem aos sabados (8983 = 25/07)."
+    },
+    "correiodopovo": {
+      "nome": "Correio do Povo - Jaragua do Sul",
+      "id_veiculo": 99,
+      "slug": "correiodopovojaraguadosul",
+      "tipo": "pdf_unico",
+      "url_indice": "https://accounts.ocp.news/jornal-digital",
+      "url_edicao": "https://accounts.ocp.news/jornal-digital/{id}",
+      "dias_publicacao": "terca a sabado (a clipagem cobre terca a sexta)",
+      "ativo": true,
+      "observacao": "O INDICE exige sessao logada; o PDF em /storage/newspapers/pdf/{hash}.pdf e PUBLICO. Os ids de edicao NAO seguem a ordem das datas (16/07 = 9280 > 17/07 = 9276), entao e obrigatorio ler o indice e casar data com link - nao da para calcular o id."
+    },
+    "diariodoiguacu": {
+      "nome": "Diario do Iguacu - Chapeco",
+      "id_veiculo": 38,
+      "slug": "diariodoiguacuchapeco",
+      "tipo": "pdf_unico",
+      "url_portal": "https://diregional.com.br/edicoes-online/diario-do-iguacu",
+      "url_modelo_edicao": "https://diregional.com.br/edicoes-online/diario-do-iguacu/edicao-{ddmmaaaa}",
+      "ativo": true,
+      "observacao": "RESOLVIDO em 27/07/2026 usando o Chrome do usuario (claude-in-chrome), onde a sessao DI PREMIUM ja esta logada - no navegador interno do Claude aparece 'Area exclusiva para Assinantes'. A pagina da edicao traz a EDICAO INTEIRA num PDF unico: link do dropdown em /files/{id}/{hash}, Content-Type application/pdf. Esse arquivo e PUBLICO (baixa sem cookie); o login serve so para VER o link. As 24 paginas soltas ficam em g.magazine-page > image (ids sequenciais logo acima do id do PDF: PDF 2843252, paginas 2843253..2843276), mas nao sao necessarias. Fins de semana vem agrupados (ex: edicao-24-25-e-26072026). ATENCAO: o dominio antigo diariodoiguacu.com.br/jornal-digital foi desativado."
+    },
+    "dc": {
+      "nome": "Revista DC - Florianopolis (grupo NSC)",
+      "id_veiculo": 219,
+      "slug": "revistadcflorianopolis",
+      "tipo": "pdf_unico_direto",
+      "arquivo_servidor": "diariocatarinense",
+      "script": "scripts/baixar_nsc.py",
+      "url_indice": "https://flip.nsctotal.com.br/edicoes/?jn_veiculo=dc",
+      "ativo": true,
+      "observacao": "RESOLVIDO em 01/08/2026: edicao 2918, 32 paginas, 80 MB. NAO PRECISA DE NAVEGADOR NEM LOGIN - o PDF e publico e o nome e previsivel: /wp-content/uploads/{ano}/{mes}/diariocatarinense_{AAAAMMDD}_todas.pdf. Ignore o ed_impressa_jn, ele nao entra na URL do PDF."
+    },
+    "an": {
+      "nome": "Revista AN - Joinville (grupo NSC)",
+      "id_veiculo": 224,
+      "slug": "revistaanjoinville",
+      "tipo": "pdf_unico_direto",
+      "arquivo_servidor": "anoticia",
+      "script": "scripts/baixar_nsc.py",
+      "url_indice": "https://flip.nsctotal.com.br/edicoes/?jn_veiculo=an",
+      "ativo": true,
+      "observacao": "RESOLVIDO em 01/08/2026: 32 paginas, 71 MB. Sem navegador e sem login - PDF publico em /wp-content/uploads/{ano}/{mes}/anoticia_{AAAAMMDD}_todas.pdf"
+    },
+    "santa": {
+      "nome": "Revista Santa - Blumenau (grupo NSC)",
+      "id_veiculo": 221,
+      "slug": "revistasantablumenau",
+      "tipo": "pdf_unico_direto",
+      "arquivo_servidor": "jornaldesantacatarina",
+      "script": "scripts/baixar_nsc.py",
+      "url_indice": "https://flip.nsctotal.com.br/edicoes/?jn_veiculo=santa",
+      "ativo": true,
+      "observacao": "RESOLVIDO em 01/08/2026: edicao 2922, 32 paginas, 78 MB. Sem navegador e sem login - PDF publico em /wp-content/uploads/{ano}/{mes}/jornaldesantacatarina_{AAAAMMDD}_todas.pdf. O nome do arquivo NAO e 'santa'."
+    },
+    "ndmais": {
+      "nome": "Noticias do Dia - Florianopolis (ND Mais)",
+      "id_veiculo": 56,
+      "slug": "noticiasdodiaflorianopolis",
+      "tipo": "flip_webp",
+      "url_portal": "https://www.eflip.com.br/pub/nd/",
+      "usuario": "08074472000109",
+      "url_modelo_pagina": "https://eflip.com.br/files/flip/RIC/{edicao}/{pasta}/{timestamp}.webp",
+      "script": "scripts/baixar_ndmais.py",
+      "ativo": true,
+      "observacao": "RESOLVIDO em 01/08/2026: edicao 53, 26 paginas (1907x2543). Sessao logada no Chrome do usuario. Uma pasta por pagina: up=pag1, up1=pag2, ... up25=pag26. Nome do arquivo e timestamp imprevisivel - NAO da para montar a URL, tem que raspar o DOM. As imagens NAO estao todas no DOM renderizado (carrega sob demanda): extrair do documentElement.outerHTML com a regex /files\\/flip\\/RIC\\/{edicao}\\/up\\d*\\/\\d+\\.webp/g. Algumas pastas trazem DUAS variantes com timestamps diferentes; o script baixa as duas e fica com a de maior area - mas em 01/08 todas tinham a MESMA dimensao, entao o desempate caiu na primeira. Se aparecer pagina errada no PDF, e aqui que se investiga."
+    },
+    "jcjoinville": {
+      "nome": "Jornal da Cidade - Joinville",
+      "id_veiculo": 1068,
+      "slug": "jornaldacidadejoinville",
+      "tipo": "custom",
+      "script": "scripts/baixar_regionais.py",
+      "url_portal": "https://jcjoinville.com.br/edicao-da-semana/",
+      "ativo": true,
+      "observacao": "RESOLVIDO em 15/09/2026, a pedido do usuario. O site embute um flipbook (blob, sem PDF baixavel), mas a edicao inteira tambem fica numa pasta PUBLICA do Google Drive (id 12aREuuGkSb4dsBocg37VUzeMv6f5esAc, linkada no iframe 'Arquivo JC'). O script pega o ULTIMO arquivo listado na pasta (ordem cronologica crescente) e baixa via drive.google.com/uc?export=download&id={id}. Sem login, sem cookie. Semanal."
+    },
+    "folhadesbravador": {
+      "nome": "Folha Desbravador - Chapeco",
+      "id_veiculo": 242,
+      "slug": "JornalFolhaDesbravador",
+      "tipo": "custom",
+      "script": "scripts/baixar_regionais.py",
+      "url_portal": "https://folhadesbravador.com.br/versao-impressa-da-folha-desbravador/",
+      "ativo": true,
+      "observacao": "RESOLVIDO em 15/09/2026. PDF publico com nome previsivel a partir da data da edicao: wp-content/uploads/{ano}/{mes}/Folha-Desbravador-Cores-{DD}-{MM}-{AAAA}.pdf. O script le a data da edicao mais recente na pagina de arquivo e tenta o mes da edicao e o anterior (mesma pegadinha do NSC: pasta pode ser a do upload). Sem login. Semanal (quintas). id_veiculo e slug conforme passado pelo usuario em 15/09/2026 (ele digitou o slug com underscore duplo antes do nome - tratado aqui como underscore simples)."
+    },
+    "olider": {
+      "nome": "Jornal O Lider - Maravilha (WH3)",
+      "id_veiculo": 611,
+      "slug": "jornalolidermaravilha",
+      "tipo": "custom",
+      "script": "scripts/baixar_regionais.py",
+      "url_portal": "https://wh3.com.br/olider/mh",
+      "ativo": true,
+      "observacao": "RESOLVIDO em 15/09/2026. PDF publico direto, listado na propria home em /galerias/olider/{prefixo}_jornal_ed_{edicao}.pdf. O script pega o maior numero de edicao encontrado na pagina. Sem login. Semanal. A pagina nao mostra a data da edicao do lado do link, mas mostra logo depois 'Destaques da semana - DD/MM a DD/MM' - a data usada no arquivo e o FIM dessa semana (confirmado: edicoes consecutivas tem exatamente 7 dias de diferenca nessa faixa)."
+    },
+    "hcnoticias": {
+      "nome": "Hora Certa Noticias - Tubarao",
+      "id_veiculo": 629,
+      "slug": "horacertanoticiastubarao",
+      "tipo": "custom",
+      "script": "scripts/baixar_regionais.py",
+      "url_portal": "https://hcnoticias.com.br/edicoes-impressas",
+      "ativo": true,
+      "observacao": "RESOLVIDO em 15/09/2026. Mesmo padrao da A Gazeta: paginas JPG numeradas, em /img/edicoes/{edicao_id}/{pagina:02d}.jpg. O id da edicao NAO segue ordem previsivel (compartilha numeracao com 'Caderno Especial' e outros), mas a data da edicao vem no atributo title do link ('Edicao - DD/MM/AAAA') na propria pagina de indice. Baixado pagina por pagina, igual A Gazeta. Sem login. Semanal (sextas)."
+    },
+    "condominiosc": {
+      "nome": "Jornal dos Condominios SC",
+      "id_veiculo": 858,
+      "slug": "jornaldoscondominiosflorianopolis",
+      "tipo": "custom",
+      "script": "scripts/baixar_regionais.py",
+      "url_portal": "https://condominiosc.com.br/versao-impressa",
+      "ativo": true,
+      "observacao": "RESOLVIDO em 15/09/2026. PDF publico listado direto na pagina (Jornal_dos_Condominios_-_ED{numero}...pdf, sufixo varia). O script pega o maior numero de edicao. PEGADINHA: o titulo mostrado para cada edicao esta com o numero errado (ex: o card do ED296 mostra 'EDICAO 295 AGOSTO 26' - numero de uma edicao anterior, mas o mes bate com o ED296 certo). A data usada no arquivo e o dia 1 do mes SEGUINTE ao mes de capa (ED296 'agosto' -> arquivo datado 01/09/2026), confirmado pelo usuario. Sem login. MENSAL, nao semanal."
+    },
+    "revistafrancisca": {
+      "nome": "Revista Francisca - Joinville",
+      "id_veiculo": 346,
+      "slug": "RevistaFranciscaSC",
+      "tipo": "custom",
+      "script": "scripts/baixar_regionais.py",
+      "url_portal": "https://revistafrancisca.com.br/edicoes/",
+      "ativo": true,
+      "observacao": "RESOLVIDO em 15/09/2026. PDF publico com nome previsivel: wp-content/uploads/{ano}/{mes}/Francisca-{mes abrev. 3 letras}-{ano}-joinvix.pdf (ex: Francisca-set-2026-joinvix.pdf). O link real so aparece via JS (flipbook 3d-flip-book, mesmo plugin do JC Joinville) mas o nome do arquivo e previsivel a partir do mes citado no texto de descricao da edicao mais recente ('Na revista de setembro...'). MENSAL, nao semanal."
+    },
+    "tribuna": {
+      "nome": "Jornal Tribuna - Sao Bento do Sul (Blog do Espeto / Adjori-SC)",
+      "id_veiculo": 497,
+      "slug": "jornaltribunasaobentodosul",
+      "tipo": "custom",
+      "script": "scripts/baixar_regionais.py",
+      "url_portal": "https://www.blogdoespeto.com/tribuna",
+      "ativo": true,
+      "observacao": "RESOLVIDO em 15/09/2026. Site Wix; o PDF fica hospedado num dominio usrfiles.com com hash ALEATORIO por edicao (nao segue padrao previsivel) - precisa raspar a pagina toda vez, extraindo o parametro pdfUrl do embed do viewer (js.certifiedcode.io). Sem login. A pagina nao mostra data/numero de edicao explicito - o arquivo usa a data do dia em que a mudanca foi notada (o usuario informou 04/09/2026 para a edicao vista em 15/09/2026 - confirmado abrindo o PDF, tem um informativo de 7 de setembro)."
+    },
+    "voltagrande": {
+      "nome": "Jornal Volta Grande",
+      "id_veiculo": 303,
+      "slug": "jornalvoltagrande",
+      "tipo": "custom",
+      "script": "scripts/baixar_regionais.py",
+      "url_portal": "https://voltagrandeonline.com.br/conteudo-completo/",
+      "ativo": true,
+      "observacao": "RESOLVIDO em 15/09/2026. A pagina usa o viewer online.pubhtml5.com (iframe). O 'bookConfig' do config.js vem ofuscado, MAS o mesmo config.js tem uma chave separada e legivel: 'fliphtml5_pages', um array JSON puro com o hash de cada pagina (campo 'n'). Cada pagina e https://online.pubhtml5.com/{livro}/{codigo}/files/large/{hash}. O 'livro/codigo' (ex: etkuh/wqrh) muda a cada edicao - precisa raspar o iframe embutido em /conteudo-completo/{id}-vg-{numero}/ pra achar o link do pubhtml5 dessa edicao especifica. CUIDADO: uma tentativa anterior (nao pelo Claude) gerou um PDF de 182 MB com paginas erradas/em miniatura - o metodo certo e este, usando fliphtml5_pages, que da paginas limpas de ~1 MB cada (2091x2800)."
+    },
+    "folhadechapeco": {
+      "nome": "Folha de Chapeco",
+      "id_veiculo": 143,
+      "slug": "folhadechapeco",
+      "tipo": "pdf_unico",
+      "url_portal": "https://diregional.com.br/edicoes-online/folha-de-chapeco",
+      "url_modelo_edicao": "https://diregional.com.br/edicoes-online/folha-de-chapeco/edicao-{ddmmaaaa}",
+      "ativo": true,
+      "observacao": "RESOLVIDO em 16/09/2026, confirmado: mesma plataforma (diregional.com.br) e mesmo padrao do Diario do Iguacu. Indice em /edicoes-online/folha-de-chapeco lista as ultimas edicoes (ordem decrescente, sem precisar login pra ver a lista). A pagina da edicao (/edicao-{ddmmaaaa}) abriu completa mesmo sem exigir login explicito nessa sessao - o botao 'Download' revela o link /files/{id}/{hash}, que e PUBLICO (baixa sem cookie, confirmado por download direto em PowerShell). Edicao 12/09/2026 = /files/2861514/{hash}, 24,1 MB. Assim como o DI, este tipo 'pdf_unico' NAO tem 'script' apontando pro baixar_regionais.py - segue sendo um coletor manual/assistido por Chrome (claude-in-chrome), nao automatizado no script regional."
+    }
+  }
+}
